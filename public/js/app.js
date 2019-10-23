@@ -61066,7 +61066,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_c("i", { staticClass: "fa fa-edit blue" })]
+                        [_c("i", { staticClass: "fa fa-money blue" })]
                       ),
                       _vm._v(
                         "\n                      /\n                      "

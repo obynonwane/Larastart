@@ -33,7 +33,7 @@
                       <td>{{user.created_at | myDate}}</td>
                       <td>
                           <a href="#" @click="editModal(user)">
-                              <i class="fa fa-edit blue"></i>
+                              <i class="fa fa-money blue"></i>
                           </a>
                           /
                           <a href="#" @click="deleteUser(user.id)">
