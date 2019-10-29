@@ -28,18 +28,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </li>
       
     </ul>
- 
-
+  <searchbar></searchbar>
     <!-- SEARCH FORM -->
     
-      <div class="input-group input-group-sm">
+      <!-- <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>
           </button>
         </div>
-      </div>
+      </div> -->
     
 
   </nav>
@@ -181,6 +180,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 <!-- ./wrapper -->
 
-<script src="/js/app.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
