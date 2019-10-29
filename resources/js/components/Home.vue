@@ -7,7 +7,7 @@
                 <h3 class="card-title">Users Table</h3>
 
                 <div class="card-tools">
-                    <button class="btn btn-success" @click="newModal">Add User <i class="fas fa-user-plus fa-fw"></i></button>
+                    <!-- <button class="btn btn-success" @click="newModal">Add User <i class="fas fa-user-plus fa-fw"></i></button> -->
                 </div>
               </div>
               <!-- /.card-header -->
@@ -20,8 +20,7 @@
                       <th>Email</th>
                       <th>Type</th>
                       <th>Company</th>
-                      <th>Registered At</th>
-                      <th>Modify</th>
+                      <!-- <th>Modify</th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -32,9 +31,9 @@
                       <td>{{user.type}}</td>
                       <td>{{user.company}}</td>
                       
+                
                       
-                      <td>{{user.created_at | myDate}}</td>
-                      <td>
+                      <!-- <td>
                           <a href="#" @click="editModal(user)">
                               <i class="fa fa-user blue"></i>
                           </a>
@@ -42,7 +41,7 @@
                           <a href="#" @click="deleteUser(user.id)">
                               <i class="fa fa-trash red"></i>
                           </a>
-                      </td>
+                      </td> -->
                     </tr>
                    
                   
@@ -70,52 +69,36 @@
                     <div class="modal-body">
                     
                                 <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Name</label>
                                     <input v-model="form.name" type="text" name="name"
-                                    
+                                        placeholder="Name"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Email</label>
                                     <input v-model="form.email" type="text" name="email"
-                                        
+                                        placeholder="Email"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
                                     <has-error :form="form" field="email"></has-error>
                                 </div>
 
-                                
-
                                 <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Company</label>
-                                    <select v-model="form.company" type="text" name="company" id="company"
+                                    <textarea v-model="form.company" type="text" name="company"
                                         placeholder="Company"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('company') }">
-                                        <option  v-for="company in companies" :key="company.id" :value="company.id">{{company.companyname}}</option>
-                                        
-                                    </select>
-                                    <has-error :form="form" field="type"></has-error>
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('company') }"></textarea>
+                                    <has-error :form="form" field="company"></has-error>
                                 </div>
 
-
                                 <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Type</label>
                                     <select v-model="form.type" type="text" name="type" id="type"
                                         placeholder="Type"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                        <option value="">Select User Role</option>
                                         <option value="admin">Admin</option>
                                         <option value="user">Standard User</option>
                                         <option value="author">Author</option>
                                     </select>
                                     <has-error :form="form" field="type"></has-error>
-                                </div>
-
-                                  <div class="form-group">
-                                        <label for="photo" class="col-xs-2 control-label">Profile Photo</label>
-                                        <div class="col-sm-12">
-                                            <input type="file" @change="updateProfile" name="photo" class="form-input">
-                                        </div>
                                 </div>
 
                                 <div class="form-group">
@@ -154,7 +137,6 @@ import { setInterval } from 'timers';
             
             return{
                 editmode:false,
-                companies:{},
                 users: {},
                 form:new Form({
                     id:'',
@@ -167,30 +149,6 @@ import { setInterval } from 'timers';
             }
         },
         methods:{
-            updateProfile(e){            
-                let file = e.target.files[0];
-                console.log(file)
-                let reader = new FileReader();
-                if(file['size'] < 2111775 ){
-                     reader.onloadend = (file) => {
-                    this.form.photo = reader.result;
-                    }
-                    reader.readAsDataURL(file);
-                }else{
-                    swal.fire({
-                         type: 'error',
-                         title: 'Ooops...',
-                         text: 'You are uploading a Large File Max 2mb required'
-                        } 
-                    )
-
-                    $('#addNew').modal('hide')
-                }
-            },
-        
-            loadCompany(){
-                axios.get("api/company").then(({ data }) => (this.companies = data.data))
-            },
             updateUser(){
 
                 this.$Progress.start()
@@ -290,8 +248,7 @@ import { setInterval } from 'timers';
             }
         },
         created() {
-            this.loadUsers()
-            this.loadCompany()
+            this.loadUsers();
             Fire.$on('AfterCreate',() => {
                 this.loadUsers();
             });

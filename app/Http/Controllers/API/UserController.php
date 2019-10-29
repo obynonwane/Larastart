@@ -44,14 +44,25 @@ class UserController extends Controller
                 'password'=>'required|string|min:6'
             ]);
 
+          
+
+            if($request->photo){
+                $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+                \Image::make($request->photo)->save(public_path('img/profile/').$name);
+                //get the full path of the current photo to be deleted and if exist then delete
+               
+            }
+
         return User::create([
             'name'=>$request['name'],
             'email'=>$request['email'],
             'type'=>$request['type'],
-            'bio'=>$request['bio'],
-            'photo'=>$request['photo'],
+            'company'=>$request['company'],
+            'photo'=>$name,
             'password' => Hash::make($request['password']),
         ]);
+
+        return ["Message" => "Successfully Added a User"];
     }
 
     /**
