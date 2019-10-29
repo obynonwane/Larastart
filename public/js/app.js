@@ -62220,16 +62220,15 @@ var render = function() {
                       alt: "User Avatar"
                     }
                   }),
-                  _vm._v(" "),
+                  _vm._v(
+                    "\n                                " +
+                      _vm._s(result.companyname) +
+                      " | "
+                  ),
                   _c(
                     "span",
-                    { staticStyle: { color: "green", "font-size": "2.5rem" } },
-                    [_vm._v(_vm._s(result.company))]
-                  ),
-                  _vm._v(
-                    " " +
-                      _vm._s(result.name) +
-                      "\n                               "
+                    { staticStyle: { color: "green", "font-size": "1.5rem" } },
+                    [_vm._v(_vm._s(result.name))]
                   )
                 ])
               ])

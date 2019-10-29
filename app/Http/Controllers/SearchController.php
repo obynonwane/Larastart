@@ -22,10 +22,16 @@ class SearchController extends Controller
         //     ->select('users.*', 'posts.descrption')
         //     ->get();
 
-           return  User::query()
-            ->where('name', 'LIKE', "%{$data['searchTerm']}%") 
-            ->orWhere('email', 'LIKE', "%{$data['searchTerm']}%") 
-            ->get();
+        //    return  User::query()
+        //     ->where('name', 'LIKE', "%{$data['searchTerm']}%") 
+        //     ->orWhere('email', 'LIKE', "%{$data['searchTerm']}%") 
+        //     ->get();
+
+      return   DB::table('companies')
+                ->join('users', 'companies.id', '=', 'users.company')
+                ->where('users.name', 'LIKE', "%{$data['searchTerm']}%") 
+                ->orWhere('users.email', 'LIKE', "%{$data['searchTerm']}%") 
+                ->get();
 
     }
 }

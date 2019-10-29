@@ -18,7 +18,7 @@
                             <li v-for="result in results" :key="result.id">
                                 <a href="/dashboard">
                                  <img class="img-circle" :src="'img/profile/'+result.photo" alt="User Avatar" style="width:3em; height:3em;">
-                                 <span style="color:green; font-size:2.5rem;">{{result.company}}</span> {{result.name}}
+                                 {{result.companyname}} | <span style="color:green; font-size:1.5rem;">{{result.name}}</span>
                                 </a>
                             </li>
                         </ul>
