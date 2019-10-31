@@ -27,11 +27,14 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'companyname'=>'required|string|max:191'
+            'companyname'=>'required|string|max:191',
+            'companyaddress'=>'required|string|max:191',
+
         ]);
 
         return Company::create([
             'companyname'=>$request['companyname'],
+            'companyaddress'=>$request['companyaddress'],
         ]);
 
     }

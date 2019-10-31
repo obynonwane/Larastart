@@ -4,10 +4,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Users Table</h3>
+                <h3 class="card-title">Emplyees Table</h3>
 
                 <div class="card-tools">
-                    <button class="btn btn-success" @click="newModal">Add User <i class="fas fa-user-plus fa-fw"></i></button>
+                    <button class="btn btn-success" @click="newModal">Add Employee <i class="fas fa-user-plus fa-fw"></i></button>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -16,21 +16,25 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
                       <th>Email</th>
                       <th>Type</th>
-                      <th>Company</th>
+                      
                       <th>Registered At</th>
                       <th>Modify</th>
+                      <th>View</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="user in users" :key="user.id">
                       <td>{{user.id}}</td>
-                      <td>{{user.name}}</td>
+                      <td>{{user.firstname}}</td>
+                      <td>{{user.lastname}}</td>
                       <td>{{user.email}}</td>
                       <td>{{user.type}}</td>
-                      <td>{{user.company}}</td>
+                      
+                      
                       
                       
                       <td>{{user.created_at | myDate}}</td>
@@ -43,6 +47,11 @@
                               <i class="fa fa-trash red"></i>
                           </a>
                       </td>
+                      <td>
+                          <a href="#" @click="viewModal(user)" class="btn btn-success">
+                              view-Info
+                          </a>
+                    </td>
                     </tr>
                    
                   
@@ -60,8 +69,8 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
-                    <h5 class="modal-title" v-show="editmode" id="addNewLabel">Updates User's Info</h5>
+                    <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New Employee</h5>
+                    <h5 class="modal-title" v-show="editmode" id="addNewLabel">Updates Employee's Info</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -69,16 +78,25 @@
                 <form action="" @submit.prevent="editmode ? updateUser() : createUser()">
                     <div class="modal-body">
                     
-                                <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Name</label>
-                                    <input v-model="form.name" type="text" name="name"
+
+                              <div class="form-group">
+                                    <label for="firstname" class="col-xs-2 control-label">First Name</label>
+                                    <input v-model="form.firstname" type="text" name="firstname"
                                     
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                                    <has-error :form="form" field="name"></has-error>
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('firstname') }">
+                                    <has-error :form="form" field="firstname"></has-error>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Email</label>
+                                    <label for="lastname" class="col-xs-2 control-label">Last Name</label>
+                                    <input v-model="form.lastname" type="text" name="lastname"
+                                    
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('lastname') }">
+                                    <has-error :form="form" field="lastname"></has-error>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="col-xs-2 control-label">Employee Email</label>
                                     <input v-model="form.email" type="text" name="email"
                                         
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
@@ -88,7 +106,7 @@
                                 
 
                                 <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Company</label>
+                                    <label for="company" class="col-xs-2 control-label">Employee Company</label>
                                     <select v-model="form.company" type="text" name="company" id="company"
                                         placeholder="Company"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('company') }">
@@ -100,19 +118,18 @@
 
 
                                 <div class="form-group">
-                                    <label for="photo" class="col-xs-2 control-label">User Type</label>
+                                    <label for="usertype" class="col-xs-2 control-label">Employee Type</label>
                                     <select v-model="form.type" type="text" name="type" id="type"
                                         placeholder="Type"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                                         <option value="admin">Admin</option>
                                         <option value="user">Standard User</option>
-                                        <option value="author">Author</option>
                                     </select>
                                     <has-error :form="form" field="type"></has-error>
                                 </div>
 
                                   <div class="form-group">
-                                        <label for="photo" class="col-xs-2 control-label">Profile Photo</label>
+                                        <label for="photo" class="col-xs-2 control-label">Employee Profile Photo</label>
                                         <div class="col-sm-12">
                                             <input type="file" @change="updateProfile" name="photo" class="form-input">
                                         </div>
@@ -142,6 +159,69 @@
 
 
 
+            <!-- Modal -->
+            <div class="modal fade" id="viewUser" tabindex="-1" role="dialog" aria-labelledby="addNewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Employee Details</h5>
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                    
+
+                              <div class="form-group">
+                                    <label for="firstname" class="col-xs-2 control-label">First Name</label>
+                                    <input v-model="form.firstname" type="text" name="firstname"
+                                    
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('firstname') }" readonly>
+                                    <has-error :form="form" field="firstname"></has-error>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastname" class="col-xs-2 control-label">Last Name</label>
+                                    <input v-model="form.lastname" type="text" name="lastname"
+                                    
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('lastname') }" readonly>
+                                    <has-error :form="form" field="lastname"></has-error>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="col-xs-2 control-label">Employee Email</label>
+                                    <input v-model="form.email" type="text" name="email"
+                                        
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('email') }" readonly>
+                                    <has-error :form="form" field="email"></has-error>
+                                </div>
+                                
+                                
+
+                                <div class="form-group">
+                                    <label for="company" class="col-xs-2 control-label">Employee Company</label>
+                                    <select v-model="form.company" type="text" name="company" id="usercompany"
+                                        placeholder="Company"
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('company') }" disabled>
+                                        <option  v-for="company in companies" :key="company.id" :value="company.id" >{{company.companyname}}</option>
+                                        
+                                    </select>
+                                    <has-error :form="form" field="type"></has-error>
+                                </div>
+                    </div>
+              
+                    <div class="modal-footer">
+
+                    </div>
+                  </form>
+                </div>
+            </div>
+            </div>
+
+
+
 
     </div>
     
@@ -158,7 +238,8 @@ import { setInterval } from 'timers';
                 users: {},
                 form:new Form({
                     id:'',
-                    name: '',
+                    firstname: '',
+                    lastname: '',
                     email: '',
                     password: '',
                     company: '',
@@ -224,6 +305,10 @@ import { setInterval } from 'timers';
                 $('#addNew').modal('show')
                 this.form.fill(user)
             },
+            viewModal(user){
+                $('#viewUser').modal('show')
+                this.form.fill(user)
+            },
                newModal(){
                 this.editmode = false;
                 this.form.reset();
@@ -262,7 +347,7 @@ import { setInterval } from 'timers';
                 })
             },
             loadUsers(){
-                axios.get("api/user").then(({ data }) => (this.users = data.data))
+                axios.get("api/user").then(({ data }) => (this.users = data))
             },
             createUser(){
                 this.$Progress.start()
@@ -285,7 +370,7 @@ import { setInterval } from 'timers';
                 .catch(() => {
                         this.$Progress.fail()
                 })
-
+    
                 
             }
         },

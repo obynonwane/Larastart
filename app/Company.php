@@ -12,7 +12,7 @@ class Company extends Model
     use HasApiTokens, Notifiable;
 
     protected $fillable = [
-        'companyname',
+        'companyname','companyaddress'
     ];
 
     public function users(){

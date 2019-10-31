@@ -4,7 +4,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Users Table</h3>
+                <h3 class="card-title">Employees Table</h3>
 
                 <div class="card-tools">
                     <!-- <button class="btn btn-success" @click="newModal">Add User <i class="fas fa-user-plus fa-fw"></i></button> -->
@@ -16,20 +16,20 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
+                      <th>First Name</th>
                       <th>Email</th>
                       <th>Type</th>
-                      <th>Company</th>
+                      
                       <!-- <th>Modify</th> -->
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="user in users" :key="user.id">
                       <td>{{user.id}}</td>
-                      <td>{{user.name}}</td>
+                      <td>{{user.firstname}}</td>
                       <td>{{user.email}}</td>
                       <td>{{user.type}}</td>
-                      <td>{{user.company}}</td>
+                      
                       
                 
                       
@@ -220,7 +220,7 @@ import { setInterval } from 'timers';
                 })
             },
             loadUsers(){
-                axios.get("api/user").then(({ data }) => (this.users = data.data))
+                axios.get("api/user").then(({ data }) => (this.users = data))
             },
             createUser(){
                 this.$Progress.start()
