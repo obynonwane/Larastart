@@ -15,6 +15,15 @@
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('companyname') }">
                                     <has-error :form="form" field="companyname"></has-error>
                                 </div>
+
+
+                            <div class="form-group">
+
+                                    
+                                    <textarea  class="form-control" v-model="form.companyaddress" id="inputExperience" placeholder="Company Address"></textarea>
+                                    <has-error :form="form" field="companyaddress"></has-error>
+                                
+                            </div>
                         
                         <button  type="submit" class="btn btn-primary">Create</button>
             
@@ -34,12 +43,14 @@
                                 <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Address</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="company in companies" :key="company.id">
                                     <td>{{company.id}}</td>
                                     <td>{{company.companyname}}</td>
+                                    <td>{{company.companyaddress}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -59,7 +70,8 @@
                 companies:{},
                  form:new Form({
                     id:'',
-                    companyname:''
+                    companyname:'',
+                    companyaddress:''
                 })
             }
         },

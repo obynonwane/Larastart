@@ -29,7 +29,8 @@ class SearchController extends Controller
 
       return   DB::table('companies')
                 ->join('users', 'companies.id', '=', 'users.company')
-                ->where('users.name', 'LIKE', "%{$data['searchTerm']}%") 
+                ->where('users.firstname', 'LIKE', "%{$data['searchTerm']}%") 
+                ->orWhere('users.lastname', 'LIKE', "%{$data['searchTerm']}%") 
                 ->orWhere('users.email', 'LIKE', "%{$data['searchTerm']}%") 
                 ->get();
 

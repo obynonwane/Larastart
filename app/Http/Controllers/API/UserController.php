@@ -27,7 +27,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->paginate(10);
+        // return User::latest()->paginate(10);
+       return User::where('id', '!=', auth('api')->user()->id)->get();
+        
     }
 
     /**
@@ -39,7 +41,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
             $this->validate($request,[
-                'name'=>'required|string|max:191',
+                //'name'=>'required|string|max:191',
+                'firstname'=>'required|string|max:191',
+                'lastname'=>'required|string|max:191',
                 'email'=>'required|string|email|max:191|unique:users',
                 'password'=>'required|string|min:6'
             ]);
@@ -54,7 +58,9 @@ class UserController extends Controller
             }
 
         return User::create([
-            'name'=>$request['name'],
+            //'name'=>$request['name'],
+            'firstname'=>$request['firstname'],
+            'lastname'=>$request['lastname'],
             'email'=>$request['email'],
             'type'=>$request['type'],
             'company'=>$request['company'],
@@ -89,7 +95,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $this->validate($request,[
-            'name'=>'required|string|max:191',
+            'firstname'=>'required|string|max:191',
+            'lastname'=>'required|string|max:191',
             'email'=>'required|string|email|max:191|unique:users,email,'.$user->id, 
             'password'=>'sometimes|string|min:6'
         ]);
